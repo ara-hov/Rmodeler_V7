@@ -1,0 +1,24 @@
+http://localhost:5656/ocpu/library/graphics/R
+
+
+ var req = $("#output").rplot("plot", {
+       "x" : x,
+                "y":y,
+                "type":type
+    }).fail(function(){
+        alert("R returned an error: " + req.responseText); 
+    });
+
+    var req = ocpu.call("plot", {
+                "x" : x,
+                "y":y,
+                "type":type
+            }, function(session){
+                session.getObject(function(outtxt){
+                    $("#output").html(outtxt);
+                });
+            });
+            //if R returns an error, alert the error message
+            req.fail(function(){
+                alert("Server error: " + req.responseText);
+            });
